@@ -27,27 +27,33 @@ app.post("/generate-recipe", async (req, res) => {
   }
 
   const ingredientsList = ingredients.join(", ");
-  const prompt = `Generate a detailed recipe based on the following ingredients: ${ingredientsList}.
-    
-    The recipe should include:
-    1. A creative recipe title.
-    2. A list of all ingredients with quantities (assume common kitchen staples are available if not listed, e.g., salt, pepper, oil, water, but prioritize the provided ingredients).
-    3. Step-by-step cooking instructions.
-    
-    Format the response as a JSON object with the following structure:
-    {
-      "title": "Recipe Title",
-      "ingredients": [
-        "Ingredient 1 (quantity)",
-        "Ingredient 2 (quantity)",
-        // ...
-      ],
-      "instructions": [
-        "Step 1: ...",
-        "Step 2: ...",
-        // ...
-      ]
-    }`;
+  const prompt = `
+  You are an AI assistant that generates recipes. The user will provide a comma-separated list of ingredients.
+  
+  First, check if all items in the following list are valid food ingredients:
+  [${ingredientsList}]
+  
+  If any item is NOT a food ingredient (e.g., "car keys", "computer", "hello"), respond ONLY with the following JSON object and nothing else:
+  {
+    "error": "Please enter a valid food ingredient."
+  }
+  
+  If all items ARE valid food ingredients, generate a detailed recipe based on them. The recipe should include a creative title, a list of all ingredients with quantities, and step-by-step cooking instructions. You may assume common kitchen staples like salt, pepper, and oil are available.
+  
+  Format the successful recipe response ONLY as a JSON object with the following structure:
+  {
+    "title": "Recipe Title",
+    "ingredients": [
+      "Ingredient 1 (quantity)",
+      "Ingredient 2 (quantity)"
+    ],
+    "instructions": [
+      "Step 1: ...",
+      "Step 2: ..."
+    ]
+  }
+  
+  Ensure your entire response is a single, complete JSON object. Do not include any additional text or markdown.`;
 
   try {
     const result = await model.generateContent(prompt);
