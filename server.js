@@ -87,7 +87,9 @@ app.post("/generate-recipe", async (req, res) => {
         rawResponse: text,
       });
     }
-
+if(recipeData.error){
+return  res.json(recipeData);
+}
     // Basic validation for the expected structure
     if (
       !recipeData.title ||
