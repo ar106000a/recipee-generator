@@ -44,31 +44,37 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    try {
-      const response = await fetch("/generate-recipe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ingredients }),
-      });
+try {
+  const response = await fetch("/generate-recipe", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ingredients }),
+  });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(
-          errorData.message || `HTTP error! status: ${response.status}`
-        );
-      }
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(
+      errorData.message || `HTTP error! status: ${response.status}`
+    );
+  }
 
-      const data = await response.json();
-      displayRecipe(data);
-    } catch (error) {
-      console.error("Error:", error);
-      errorOutput.style.display = "block";
-      errorOutput.innerHTML = `<p>Failed to generate recipe: ${error.message}. Please try again.</p>`;
-    } finally {
-      loadingSpinner.style.display = "none"; // Hide spinner regardless of success or failure
-    }
+  const data = await response.json();
+
+  // Check for the error key from the server response
+  if (data.error) {
+    throw new Error(data.error);
+  }
+
+  displayRecipe(data);
+} catch (error) {
+  console.error("Error:", error);
+  errorOutput.style.display = "block";
+  errorOutput.innerHTML = `<p>Failed to generate recipe: ${error.message}. Please try again.</p>`;
+} finally {
+  loadingSpinner.style.display = "none";
+}
   });
 
   function displayRecipe(recipe) {
