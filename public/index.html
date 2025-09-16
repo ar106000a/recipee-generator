@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Recipe Generator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>AI Recipe Generator</h1>
+
+      <form id="recipeForm">
+        <div class="input-group">
+          <label for="ingredientsInput"
+            >Enter ingredients (comma-separated):</label
+          >
+          <input
+            type="text"
+            id="ingredientsInput"
+            placeholder="e.g., chicken, pasta, tomatoes"
+          />
+        </div>
+
+        <div class="input-group">
+          <label>Or select from common items:</label>
+          <div class="checkbox-group">
+            <input type="checkbox" id="chicken" value="chicken" />
+            <label for="chicken">Chicken</label>
+            <input type="checkbox" id="beef" value="beef" />
+            <label for="beef">Beef</label>
+            <input type="checkbox" id="pasta" value="pasta" />
+            <label for="pasta">Pasta</label>
+            <input type="checkbox" id="rice" value="rice" />
+            <label for="rice">Rice</label>
+            <input type="checkbox" id="eggs" value="eggs" />
+            <label for="eggs">Eggs</label>
+            <input type="checkbox" id="milk" value="milk" />
+            <label for="milk">Milk</label>
+            <input type="checkbox" id="flour" value="flour" />
+            <label for="flour">Flour</label>
+            <input type="checkbox" id="onions" value="onions" />
+            <label for="onions">Onions</label>
+            <input type="checkbox" id="garlic" value="garlic" />
+            <label for="garlic">Garlic</label>
+            <input type="checkbox" id="potatoes" value="potatoes" />
+            <label for="potatoes">Potatoes</label>
+          </div>
+        </div>
+
+        <button type="submit">Generate Recipe</button>
+      </form>
+
+      <div id="loading" class="spinner-container">
+        <div class="spinner"></div>
+        <p>Generating your recipe...</p>
+      </div>
+
+      <div id="recipeOutput" class="recipe-output">
+        <!-- Recipe will be displayed here -->
+      </div>
+
+      <div id="errorOutput" class="error-output">
+        <!-- Errors will be displayed here -->
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
